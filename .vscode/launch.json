@@ -3,12 +3,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Run Main",
-            "request": "launch",
-            "mainClass": "rife.bld.extension.ArchiveMain"
-        },
-        {
-            "type": "java",
             "name": "Run Tests",
             "request": "launch",
             "mainClass": "org.junit.platform.console.ConsoleLauncher",
