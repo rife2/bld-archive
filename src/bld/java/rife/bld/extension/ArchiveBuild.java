@@ -1,3 +1,7 @@
+/*
+ * Copyright 2001-2023 Geert Bevin (gbevin[remove] at uwyn dot com)
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ */
 package rife.bld.extension;
 
 import rife.bld.Project;
@@ -40,7 +44,7 @@ public class ArchiveBuild extends Project {
             .info()
                 .groupId("com.uwyn.rife2")
                 .artifactId("bld-archive")
-                .description("bld extension for creating archives")
+                .description("bld extension for working with archives")
                 .url("https://github.com/rife2/bld-archive")
                 .developer(new PublishDeveloper()
                     .id("gbevin")
