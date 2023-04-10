@@ -28,7 +28,7 @@ public class ArchiveBuild extends Project {
 
         repositories = List.of(MAVEN_CENTRAL, RIFE2_RELEASES);
         scope(compile)
-            .include(dependency("com.uwyn.rife2", "rife2", version(1,5,18)))
+            .include(dependency("com.uwyn.rife2", "rife2", version(1,5,19)))
             .include(dependency("org.apache.commons", "commons-compress", version(1,23,0)));
         scope(test)
             .include(dependency("org.junit.jupiter", "junit-jupiter", version(5,9,2)))
