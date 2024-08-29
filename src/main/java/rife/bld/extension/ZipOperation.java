@@ -7,15 +7,20 @@ package rife.bld.extension;
 import org.apache.commons.compress.archivers.zip.UnixStat;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
-import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.io.IOUtils;
 import rife.bld.NamedFile;
 import rife.bld.operations.AbstractOperation;
 import rife.tools.FileUtils;
 import rife.tools.StringUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.*;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -135,10 +140,49 @@ public class ZipOperation extends AbstractOperation<ZipOperation> {
      *
      * @param directories source directories
      * @return this operation instance
+     * @see #sourceDirectories(List)
      * @since 1.0
      */
     public ZipOperation sourceDirectories(File... directories) {
-        sourceDirectories_.addAll(List.of(directories));
+        return sourceDirectories(List.of(directories));
+    }
+
+    /**
+     * Provides source directories that will be used for the zip archive creation.
+     *
+     * @param directories source directories
+     * @return this operation instance
+     * @see #sourceDirectoriesPaths(List)
+     * @since 1.0
+     */
+    public ZipOperation sourceDirectories(Path... directories) {
+        return sourceDirectoriesPaths(List.of(directories));
+    }
+
+    /**
+     * Provides source directories that will be used for the zip archive creation.
+     *
+     * @param directories source directories
+     * @return this operation instance
+     * @see #sourceDirectoriesStrings(List)
+     * @since 1.0
+     */
+    public ZipOperation sourceDirectories(String... directories) {
+        return sourceDirectoriesStrings(List.of(directories));
+    }
+
+    /**
+     * Provides a list of source directories that will be used for the zip archive creation.
+     * <p>
+     * A copy will be created to allow this list to be independently modifiable.
+     *
+     * @param directories a list of source directories
+     * @return this operation instance
+     * @see #sourceDirectories(File...)
+     * @since 1.0
+     */
+    public ZipOperation sourceDirectories(List<File> directories) {
+        sourceDirectories_.addAll(directories);
         return this;
     }
 
@@ -149,11 +193,25 @@ public class ZipOperation extends AbstractOperation<ZipOperation> {
      *
      * @param directories a list of source directories
      * @return this operation instance
+     * @see #sourceDirectories(Path...)
      * @since 1.0
      */
-    public ZipOperation sourceDirectories(List<File> directories) {
-        sourceDirectories_.addAll(directories);
-        return this;
+    public ZipOperation sourceDirectoriesPaths(List<Path> directories) {
+        return sourceDirectories(directories.stream().map(Path::toFile).toList());
+    }
+
+    /**
+     * Provides a list of source directories that will be used for the zip archive creation.
+     * <p>
+     * A copy will be created to allow this list to be independently modifiable.
+     *
+     * @param directories a list of source directories
+     * @return this operation instance
+     * @see #sourceDirectories(String...)
+     * @since 1.0
+     */
+    public ZipOperation sourceDirectoriesStrings(List<String> directories) {
+        return sourceDirectories(directories.stream().map(File::new).toList());
     }
 
     /**
@@ -192,6 +250,28 @@ public class ZipOperation extends AbstractOperation<ZipOperation> {
     public ZipOperation destinationDirectory(File directory) {
         destinationDirectory_ = directory;
         return this;
+    }
+
+    /**
+     * Provides the destination directory in which the zip archive will be created.
+     *
+     * @param directory the zip destination directory
+     * @return this operation instance
+     * @since 1.0
+     */
+    public ZipOperation destinationDirectory(Path directory) {
+        return destinationDirectory(directory.toFile());
+    }
+
+    /**
+     * Provides the destination directory in which the zip archive will be created.
+     *
+     * @param directory the zip destination directory
+     * @return this operation instance
+     * @since 1.0
+     */
+    public ZipOperation destinationDirectory(String directory) {
+        return destinationDirectory(new File(directory));
     }
 
     /**
