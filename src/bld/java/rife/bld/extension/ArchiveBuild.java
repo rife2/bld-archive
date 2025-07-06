@@ -19,7 +19,7 @@ public class ArchiveBuild extends Project {
     public ArchiveBuild() {
         pkg = "rife.bld.extension";
         name = "Archive";
-        version = version(0,6,2);
+        version = version(0,6,3);
         archiveBaseName = "bld-archive";
 
         javaRelease = 17;
@@ -28,11 +28,11 @@ public class ArchiveBuild extends Project {
 
         repositories = List.of(MAVEN_CENTRAL, RIFE2_RELEASES);
         scope(compile)
-            .include(dependency("com.uwyn.rife2", "bld", version(2,2,1)))
+            .include(dependency("com.uwyn.rife2", "bld", version(2,3,0)))
             .include(dependency("org.apache.commons", "commons-compress", version(1,27,1)));
         scope(test)
-            .include(dependency("org.junit.jupiter", "junit-jupiter", version(5,11,4)))
-            .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1,11,4)));
+            .include(dependency("org.junit.jupiter", "junit-jupiter", version(5,13,3)))
+            .include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1,13,3)));
 
         javadocOperation()
             .javadocOptions()
